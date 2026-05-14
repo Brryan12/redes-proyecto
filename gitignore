@@ -1,0 +1,6 @@
+# Archivos con credenciales — NUNCA subir a GitHub
+*.tfvars
+*.tfstate
+*.tfstate.backup
+.terraform/
+.terraform.lock.hcl
