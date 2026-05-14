@@ -1,0 +1,4 @@
+lb_domain_name = "redes-proyecto.canadacentral.cloudapp.azure.com"
+lb_public_ip = "20.175.135.108"
+vm1_public_ip = "20.63.44.190"
+vm2_public_ip = "4.204.221.60"
