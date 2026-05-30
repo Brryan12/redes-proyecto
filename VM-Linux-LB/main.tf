@@ -288,7 +288,7 @@ resource "azurerm_lb_rule" "rule_http" {
   frontend_ip_configuration_name = "front-Proyecto"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.backend.id]
   probe_id                       = azurerm_lb_probe.probe_http.id
-  load_distribution              = "SourceIP"
+  load_distribution              = "Default"
   disable_outbound_snat          = false
   idle_timeout_in_minutes        = 4
 }
@@ -303,7 +303,7 @@ resource "azurerm_lb_rule" "rule_https" {
   frontend_ip_configuration_name = "front-Proyecto"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.backend.id]
   probe_id                       = azurerm_lb_probe.probe_https.id
-  load_distribution              = "SourceIP"
+  load_distribution              = "Default"
   disable_outbound_snat          = false
   idle_timeout_in_minutes        = 4
 }

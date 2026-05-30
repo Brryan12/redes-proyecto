@@ -1,0 +1,91 @@
+---
+- name: Configurar servidores web con PHP y NGINX
+  hosts: webservers
+  become: true
+
+  tasks:
+
+    # ── Paquetes ────────────────────────────────────────────────
+    - name: Actualizar apt
+      apt:
+        update_cache: yes
+
+    - name: Instalar NGINX, PHP, Certbot y extensiones
+      apt:
+        name:
+          - nginx
+          - php8.1
+          - php8.1-fpm
+          - php8.1-ldap        # extensión LDAP para PHP — necesaria para ldap_connect()
+          - certbot
+          - python3-certbot-nginx
+        state: present
+
+    # ── Directorio web ──────────────────────────────────────────
+    - name: Crear directorio /var/www/redes
+      file:
+        path: /var/www/redes
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    # ── Archivos de la app ──────────────────────────────────────
+    - name: Copiar config.php
+      copy:
+        src: files/config.php
+        dest: /var/www/redes/config.php
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    - name: Copiar index.php
+      copy:
+        src: files/index.php
+        dest: /var/www/redes/index.php
+        owner: www-data
+        group: www-data
+        mode: '0644'
+
+    # ── NGINX ───────────────────────────────────────────────────
+    - name: Copiar configuración NGINX
+      template:
+        src: templates/nginx-redes.conf.j2
+        dest: /etc/nginx/sites-available/redes
+      notify: Reiniciar NGINX
+
+    - name: Activar sitio redes
+      file:
+        src: /etc/nginx/sites-available/redes
+        dest: /etc/nginx/sites-enabled/redes
+        state: link
+        force: yes
+      notify: Reiniciar NGINX
+
+    - name: Eliminar sitio default
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: Reiniciar NGINX
+
+    # ── Servicios ───────────────────────────────────────────────
+    - name: Iniciar y habilitar PHP-FPM
+      service:
+        name: php8.1-fpm
+        state: started
+        enabled: true
+
+    - name: Validar configuración NGINX
+      command: nginx -t
+
+    - name: Iniciar y habilitar NGINX
+      service:
+        name: nginx
+        state: started
+        enabled: true
+
+  handlers:
+    - name: Reiniciar NGINX
+      service:
+        name: nginx
+        state: restarted

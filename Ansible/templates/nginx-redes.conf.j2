@@ -1,0 +1,42 @@
+server_names_hash_bucket_size 128;
+
+# Servidor HTTP — redirige a HTTPS y expone /health para el probe del LB
+server {
+    listen 80;
+    server_name redes-proyecto.northcentralus.cloudapp.azure.com;
+
+    location /health {
+        return 200 "ok\n";
+        add_header Content-Type text/plain;
+    }
+
+    location / {
+        return 301 https://$host$request_uri;
+    }
+}
+
+# Servidor HTTPS — sirve la app PHP con certificado Let's Encrypt
+server {
+    listen 443 ssl;
+    server_name redes-proyecto.northcentralus.cloudapp.azure.com;
+
+    root /var/www/redes;
+    index index.php index.html;
+
+    ssl_certificate     /etc/letsencrypt/live/redes-proyecto.northcentralus.cloudapp.azure.com/fullchain.pem;
+    ssl_certificate_key /etc/letsencrypt/live/redes-proyecto.northcentralus.cloudapp.azure.com/privkey.pem;
+
+    location /health {
+        return 200 "ok\n";
+        add_header Content-Type text/plain;
+    }
+
+    location / {
+        try_files $uri $uri/ /index.php;
+    }
+
+    location ~ \.php$ {
+        include snippets/fastcgi-php.conf;
+        fastcgi_pass unix:/run/php/php8.1-fpm.sock;
+    }
+}
