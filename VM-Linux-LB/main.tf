@@ -20,7 +20,7 @@ provider "azurerm" {
 # ============================================================
 resource "azurerm_resource_group" "rg" {
   name     = "redes"
-  location = "canadacentral"
+  location = "northcentralus"
 }
 
 # ============================================================
@@ -219,8 +219,6 @@ resource "azurerm_public_ip" "pip_lb" {
   resource_group_name = azurerm_resource_group.rg.name
   allocation_method   = "Static"
   sku                 = "Standard"
-  zones               = ["1", "2", "3"]
-
   # Cambia este label si quieres otro nombre de dominio
   domain_name_label   = "redes-proyecto"
 }

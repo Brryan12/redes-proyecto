@@ -1,0 +1,67 @@
+---
+- name: Configurar servidores web
+  hosts: webservers
+  become: true
+
+  tasks:
+
+    - name: Actualizar apt
+      apt:
+        update_cache: yes
+
+    - name: Instalar NGINX y dependencias
+      apt:
+        name:
+          - nginx
+          - python3
+          - python3-pip
+          - certbot
+          - python3-certbot-nginx
+        state: present
+
+    - name: Crear directorio web
+      file:
+        path: /var/www/proyecto
+        state: directory
+        owner: www-data
+        group: www-data
+        mode: '0755'
+
+    - name: Copiar configuración NGINX
+      template:
+        src: templates/nginx.conf.j2
+        dest: /etc/nginx/sites-available/proyecto
+      notify: Reiniciar NGINX
+
+    - name: Activar sitio
+      file:
+        src: /etc/nginx/sites-available/proyecto
+        dest: /etc/nginx/sites-enabled/proyecto
+        state: link
+      notify: Reiniciar NGINX
+
+    - name: Desactivar sitio default
+      file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      notify: Reiniciar NGINX
+
+    - name: Copiar página web
+      template:
+        src: templates/index.html.j2
+        dest: /var/www/proyecto/index.html
+        owner: www-data
+        group: www-data
+
+    - name: Iniciar y habilitar NGINX
+      service:
+        name: nginx
+        state: started
+        enabled: yes
+
+  handlers:
+    - name: Reiniciar NGINX
+      service:
+        name: nginx
+        state: restarted
+
