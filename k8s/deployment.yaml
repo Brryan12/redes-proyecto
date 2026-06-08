@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redes-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: redes-app
+  template:
+    metadata:
+      labels:
+        app: redes-app
+    spec:
+      containers:
+      - name: redes-app
+        image: acrredes2026.azurecr.io/redes-app:latest
+        ports:
+        - containerPort: 5000

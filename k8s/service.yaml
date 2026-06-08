@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: redes-app-service
+spec:
+  type: LoadBalancer
+  selector:
+    app: redes-app
+  ports:
+  - port: 80
+    targetPort: 5000
