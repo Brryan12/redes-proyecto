@@ -5,3 +5,19 @@
 .terraform/
 .terraform.lock.hcl
 *.pem
+
+# Python / Flask
+venv/
+app/venv/
+__pycache__/
+*.pyc
+.env
+
+# Archivos temporales
+*.crdownload
+
+# IDE / sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
