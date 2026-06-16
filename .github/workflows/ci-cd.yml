@@ -28,7 +28,7 @@ jobs:
 
       - name: Construir imagen Docker
         run: |
-          docker build -t $ACR_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} ./app
+          docker build -t $ACR_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} ./redes-parte2/app
           docker tag $ACR_LOGIN_SERVER/$IMAGE_NAME:${{ github.sha }} \
                      $ACR_LOGIN_SERVER/$IMAGE_NAME:latest
 
