@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: redes-app
-        image: tuacr2026.azurecr.io/redes-app:latest
+        image: acrredes2026.azurecr.io/redes-app:latest
         ports:
         - containerPort: 5000
         resources:

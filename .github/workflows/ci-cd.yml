@@ -6,8 +6,8 @@ on:
       - main
 
 env:
-  ACR_NAME: tuacr2026
-  ACR_LOGIN_SERVER: tuacr2026.azurecr.io
+  ACR_NAME: acrredes2026
+  ACR_LOGIN_SERVER: acrredes2026.azurecr.io
   IMAGE_NAME: redes-app
 
 jobs:
