@@ -2,6 +2,8 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: redes-app
+  labels:
+    app: redes-app
 spec:
   replicas: 2
   selector:
@@ -14,6 +16,13 @@ spec:
     spec:
       containers:
       - name: redes-app
-        image: acrredes2026.azurecr.io/redes-app:latest
+        image: tuacr2026.azurecr.io/redes-app:latest
         ports:
         - containerPort: 5000
+        resources:
+          requests:
+            memory: "64Mi"
+            cpu: "125m"
+          limits:
+            memory: "128Mi"
+            cpu: "250m"
