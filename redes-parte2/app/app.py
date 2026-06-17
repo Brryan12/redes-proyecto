@@ -14,6 +14,7 @@ def home():
         <h1>Proyecto Redes EIF-208</h1>
         <h2>Parte 2: creación, automatización y despliegue de una aplicación web sencilla</h2>
         <p>Aplicación desplegada en AKS.</p>
+        <p>Estudiantes...</p> 
         <p>Pod: <strong>{hostname}</strong></p>
     </body>
     </html>
