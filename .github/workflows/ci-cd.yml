@@ -18,10 +18,10 @@ jobs:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Login en Azure
+      - name: Login en Azure (suscripción del ACR)
         uses: azure/login@v2
         with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+          creds: ${{ secrets.AZURE_CREDENTIALS_ACR }}
 
       - name: Login en ACR
         run: az acr login --name $ACR_NAME
@@ -52,7 +52,7 @@ jobs:
       - name: Descargar código
         uses: actions/checkout@v4
 
-      - name: Login en Azure
+      - name: Login en Azure (suscripción del AKS)
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
