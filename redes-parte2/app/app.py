@@ -16,6 +16,7 @@ def home():
         <p>Aplicación desplegada en AKS.</p>
         <p>Estudiantes: Sebas</p> 
         <p>Gloriana Mojica Rojas</p>
+        <p>Priscilla Murillo</p>
         <p>Pod: <strong>{hostname}</strong></p>
     </body>
     </html>
