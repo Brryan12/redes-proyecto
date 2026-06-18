@@ -12,7 +12,7 @@ variable "ssh_public_key" {
 variable "location" {
   description = "Región de Azure"
   type        = string
-  default     = "canadacentral"
+  default     = "northcentralus"
 }
 
 variable "resource_group_name" {
