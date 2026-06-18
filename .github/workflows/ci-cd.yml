@@ -43,7 +43,26 @@ jobs:
             --name $ACR_NAME \
             --repository $IMAGE_NAME \
             --output table
+      - name: Limpiar versiones antiguas (mantener últimas 3 + latest)
+        run: |
+          TAGS=$(az acr repository show-tags \
+            --name $ACR_NAME \
+            --repository $IMAGE_NAME \
+            --orderby time_desc \
+            --output tsv | grep -v latest)
 
+          KEEP=3
+          COUNT=0
+          for TAG in $TAGS; do
+            COUNT=$((COUNT+1))
+            if [ $COUNT -gt $KEEP ]; then
+              echo "Borrando tag antiguo: $TAG"
+              az acr repository delete \
+                --name $ACR_NAME \
+                --image $IMAGE_NAME:$TAG \
+                --yes
+            fi
+          done
   deploy:
     runs-on: ubuntu-latest
     needs: build-and-push
