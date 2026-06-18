@@ -15,6 +15,7 @@ def home():
         <h2>Parte 2: creación, automatización y despliegue de una aplicación web sencilla</h2>
         <p>Aplicación desplegada en AKS.</p>
         <p>Estudiantes: Sebas</p> 
+        <p>glori</p>
         <p>Pod: <strong>{hostname}</strong></p>
     </body>
     </html>
